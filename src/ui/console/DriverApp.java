@@ -1,4 +1,4 @@
-package ui;
+package ui.console;
 
 import bank.Account;
 import bank.Bank;
