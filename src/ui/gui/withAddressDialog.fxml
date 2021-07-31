@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.gui.WithAddressController">
+    <headerText>
+        Please enter the relevant information
+    </headerText>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label fx:id="nameLabel" text="Enter name of Branch:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="name" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label fx:id="addressLabel" text="Enter Branch Address:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <Label text="Street" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+            <TextField fx:id="street" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.columnSpan="3"/>
+            <Label text="City" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <Label text="State-Zip Code" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <ComboBox fx:id="state" GridPane.columnIndex="1" GridPane.rowIndex="4" minWidth="150"/>
+            <Label text="-" GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+            <TextField fx:id="zipCode" GridPane.columnIndex="3" GridPane.rowIndex="4"
+                       maxWidth="50"/>
+            <Label fx:id="statusLabel" GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.columnSpan="3"
+                   style="-fx-text-fill: red;">
+                <font>
+                    <Font size="10"/>
+                </font>
+            </Label>
+        </GridPane>
+    </content>
+</DialogPane>

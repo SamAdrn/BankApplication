@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+
+<DialogPane>
+    <headerText>
+        Welcome to Bank Application
+    </headerText>
+    <content>
+        <VBox alignment="CENTER">
+            <TextArea text="Here, organize every inch of detail of your banks from various branches to individual customer accounts. To begin, open up a new Bank by clicking on the New button, or manage an existing one by clicking on the buttons with the bank names."
+                   wrapText="true" editable="false" maxHeight="75"/>
+            <Label text="Made by: Samuel A. Kosasih 2021"/>
+        </VBox>
+    </content>
+</DialogPane>
