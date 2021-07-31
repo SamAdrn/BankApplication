@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.gui.AccountsDialogController">
+    <headerText>
+        Select an account
+    </headerText>
+    <content>
+        <VBox alignment="CENTER">
+            <ListView fx:id="accountListView"/>
+        </VBox>
+    </content>
+</DialogPane>

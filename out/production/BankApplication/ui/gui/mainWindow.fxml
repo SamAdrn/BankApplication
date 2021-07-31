@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
+<BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="ui.gui.Controller"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+            prefHeight="400.0" prefWidth="600.0"
+            fx:id="mainPane">
+    <top>
+        <VBox>
+            <ToolBar>
+                <Button fx:id="newButton" text="New" prefWidth="90"/>
+                <Button text="Instructions" prefWidth="90" onAction="#showInstructionsDialog">
+                    <tooltip>
+                        <Tooltip text="View Instructions"/>
+                    </tooltip>
+                </Button>
+                <Button fx:id="deleteButton" text="Delete" prefWidth="90"/>
+                <Button fx:id="backButton" text="Back" prefWidth="90"/>
+                <Pane HBox.hgrow="ALWAYS"/>
+                <Button text="Exit" prefWidth="90" onAction="#handleExit">
+                    <tooltip>
+                        <Tooltip text="Exit program and save your changes"/>
+                    </tooltip>
+                </Button>
+            </ToolBar>
+        </VBox>
+    </top>
+    <bottom>
+        <HBox style="-fx-background-color: gainsboro;">
+            <padding>
+                <Insets bottom="10" left="10" top="10"/>
+            </padding>
+            <Label fx:id="statusLabel">
+                <font>
+                    <Font size="12"/>
+                </font>
+            </Label>
+        </HBox>
+    </bottom>
+</BorderPane>

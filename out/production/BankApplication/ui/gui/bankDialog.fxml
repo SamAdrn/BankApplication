@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.DialogPane?>
+
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.gui.BankDialogController">
+    <headerText>
+        Simply type in a suitable name for your bank.
+    </headerText>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label fx:id="label" text="Enter name of Bank: " GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <TextField fx:id="bankName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        </GridPane>
+    </content>
+</DialogPane>

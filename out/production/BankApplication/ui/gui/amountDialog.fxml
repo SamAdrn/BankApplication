@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="ui.gui.AmountDialogController">
+    <headerText>
+        Enter your desired amount.
+    </headerText>
+    <content>
+        <GridPane vgap="10" hgap="10">
+            <Label text="Current Balance" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+            <Label fx:id="balance" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <Label text="Amount: $" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="amount" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        </GridPane>
+    </content>
+</DialogPane>
+
