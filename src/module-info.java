@@ -5,5 +5,6 @@ module BankApplication {
     requires org.jetbrains.annotations;
 
     opens ui.gui;
+    opens utility;
 
 }
