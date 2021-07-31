@@ -6,46 +6,70 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * Defines the methods required to establish a Branch of a Bank distinguished
- * with a 3-Digit Branch Code.
+ * This class represents a branch.<br><br>
+ * <code>Branch</code> objects provide a variety of methods to simulate a real-life bank branch,
+ * as in the different locations of operation held by the bank. Here, a data structure of
+ * <code>Customer</code> objects is available, to store a handful of customers who registered as a
+ * client of the branch.<br><br>
+ * <code>Branch</code> objects are provided with a 3-Digit unique ID called <code>BRANCH_CODE</code>
+ * at instantiation. This value is final and cannot be mutated.
  *
- * @author Samuel Kosasih
+ * @author Samuel A. Kosasih
+ *
+ * @see Bank
+ * @see Customer
  */
 public class Branch implements Serialized, Iterable<Customer>, Serializable {
 
     /**
-     * The name of the Branch.
+     * This field stores the name of the branch as a <code>String</code>.
      */
-    private final String BRANCH_NAME;
+    private String branchName;
+
     /**
-     * The address of the Branch.
+     * This field stores the address of the branch as an <code>Address</code> object.
      */
     private Address branchAddress;
+
     /**
-     * A 3-Digit unique integer representing the Branch Code.
+     * This field stores the 3-Digit unique branch code as an <code>Integer</code>.
      */
     private final int BRANCH_CODE;
+
     /**
-     * A Decimal Map of Customers in this Branch.
+     * This field stores a <code>Map</code> used to store <code>Customer</code> objects.<br><br>
+     * Uses the customer IDs as the key, and the <code>Customer</code> objects as the value.
      */
     private final Map<Integer, Customer> CUSTOMERS;
+
     /**
-     * The number of Customers associated with the Branch.
+     * This field stores the number of customers as an <code>Integer</code>.
      */
     private int numberOfCustomers;
+
     /**
-     * An Object of type Random used to generate Branch Codes.
+     * This field stores a <code>Random</code> object.<br><br>
+     * Mainly used to generate the 3-Digit unique branch codes.
      */
     private final Random rand = new Random();
 
     /**
-     * Default Constructor.
+     * Default Constructor.<br><br>
+     * Generates a 3-Digit unique ID used to distinguish between other <code>Branch</code>
+     * objects. This ID is generated using the <code>Random</code> class.<br><br>
+     * The recommended input for the address is as follows:
+     * <br>
+     * <blockquote>Street,City,State,Zip</blockquote>
+     * with commas (,) separating each of them. An invalid address format will not break the
+     * class, but will only store <em>Invalid Address</em> as the branch address.
      *
-     * @param branchName    The Branch's name
-     * @param branchAddress The Branch's address
+     * @param branchName    the branch's name as a <code>String</code>
+     * @param branchAddress the branch's address as a <code>String</code>
+     *
+     * @see Random
      */
     public Branch(String branchName, String branchAddress) {
-        this.BRANCH_NAME = branchName;
+        this.branchName = branchName;
         this.branchAddress = new Address(branchAddress);
         this.CUSTOMERS = new LinkedHashMap<>();
         this.BRANCH_CODE = rand.nextInt(900) + 100;
@@ -53,76 +77,117 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
     }
 
     /**
-     * Overloaded Constructor. Allows the given Customer Decimal Map to be
-     * imported immediately.
+     * Overloaded Constructor. <br><br>
+     * This constructor allows an <code>Address</code> object as a parameter.
      *
-     * @param branchName    the Branch's name
-     * @param branchAddress the Branch's address
-     * @param customers     the given Customer Decimal Map
+     * @param branchName    the Customer's name
+     * @param branchAddress the Customer's address
      */
-    public Branch(String branchName, String branchAddress, Map<Integer, Customer> customers) {
-        this.BRANCH_NAME = branchName;
-        this.branchAddress = new Address(branchAddress);
-        this.CUSTOMERS = customers;
+    public Branch(String branchName, Address branchAddress) {
+        this.branchName = branchName;
+        this.branchAddress = branchAddress;
+        this.CUSTOMERS = new LinkedHashMap<>();
         this.BRANCH_CODE = rand.nextInt(900) + 100;
         this.numberOfCustomers = 0;
     }
 
     /**
-     * Retrieves the Branch's name.
+     * Retrieves the branch's name.
      *
-     * @return a String value representing the Branch's name
+     * @return the branch's name as a <code>String</code>
      */
     public String getBranchName() {
-        return BRANCH_NAME;
+        return branchName;
     }
 
     /**
-     * Retrieves the Branch's address.
+     * Sets the branch's name with a new name.
      *
-     * @return a String value representing the Branch's address
+     * @param branchName the new given name as a <code>String</code>
      */
-    public String getBranchAddress() {
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
+    /**
+     * Retrieves the branch's address, formatted in the form:
+     * <br>
+     * <blockquote>Street, City, State Zip</blockquote>
+     *
+     * @return a representation of the branch's address as a <code>String</code>
+     */
+    public String getAddressString() {
         return branchAddress.toString();
     }
 
     /**
-     * Sets the Customer's address to the new given address.
+     * Retrieves the branch's address as an <code>Address</code> object.
      *
-     * @param branchAddress the new given address
-     * @return returns true to indicate that the address has been renewed
+     * @return the branch's address object as an <code>Address</code>
      */
-    public boolean setNewBranchAddress(String branchAddress) {
-        this.branchAddress = new Address(branchAddress);
-        return true;
+    public Address getAddress() {
+        return branchAddress;
     }
 
     /**
-     * Retrieves the 3-Digit Branch Code
+     * Sets the branch's address to the <code>Address</code> parameter.
      *
-     * @return an integer value for the Branch Code
+     * @param branchAddress the new address as an <code>Address</code>.
+     */
+    public void setAddress(Address branchAddress) {
+        this.branchAddress = branchAddress;
+    }
+
+    /**
+     * Retrieves the 3-Digit <code>BRANCH_CODE</code>.
+     *
+     * @return a value for the branch code as an <code>Integer</code>
      */
     public int getBranchCode() {
         return BRANCH_CODE;
     }
 
     /**
-     * Retrieves the number of Customers associated with the Branch.
+     * Retrieves the number of customers registered at the branch.
      *
-     * @return an integer value for the number of Customers
+     * @return a value for the number of customers as an <code>Integer</code>
      */
     public int getNumberOfCustomers() {
         return numberOfCustomers;
     }
 
     /**
-     * Adds a new Customer to be associated with the Branch.
+     * Adds a new customer to be registered at the branch.<br><br>
+     * The recommended input for the address is as follows:
+     * <br>
+     * <blockquote>Street,City,State,Zip</blockquote>
+     * with commas (,) separating each of them. An invalid address format will not break the
+     * class, but will only store <em>Invalid Address</em> as the customer address.
      *
-     * @param customerName    the Customer's name
-     * @param customerAddress the Customer' address
-     * @return true if new Customer has been added
+     * @param customerName    the customer's name as a <code>String</code>
+     * @param customerAddress the customer' address as a <code>String</code>
+     * @return <code>true</code> if the new customer has been added to the database.
+     * Otherwise, it will return <code>false</code>.
+     *
+     * @see Customer
      */
     public boolean addCustomer(String customerName, String customerAddress) {
+        return addCustomer(customerName, new Address(customerAddress));
+    }
+
+    /**
+     * Overloaded Method. Adds a new customer to be registered at the branch.<br><br>
+     * This method accepts an <code>Address</code> object to set the customer's address
+     * instead of a <code>String</code>.
+     *
+     * @param customerName    the customer's name as a <code>String</code>
+     * @param customerAddress the customer' address as a <code>String</code>
+     * @return <code>true</code> if the new customer has been added to the database.
+     * Otherwise, it will return <code>false</code>.
+     *
+     * @see Customer
+     */
+    public boolean addCustomer(String customerName, Address customerAddress) {
         Customer customer = new Customer(customerName, customerAddress);
         while (true) {
             if (CUSTOMERS.containsKey(customer.getKey())) {
@@ -132,15 +197,20 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
             }
         }
         numberOfCustomers++;
-        return CUSTOMERS.put(customer.getKey(), customer) != null;
+        return CUSTOMERS.put(customer.getKey(), customer) == null;
     }
 
     /**
-     * Removes a Customer with the given Customer ID for the Branch's Customer
-     * list.
+     * Removes a customer from the branch database.<br><br>
+     * To choose the customer to be removed, the <code>customerId</code> parameter will identify
+     * which <code>Customer</code> object to be removed based on its <code>CUSTOMER_ID</code>.
      *
-     * @param customerId the given Customer ID
-     * @return true if Customer is successfully removed
+     * @param customerId a 5-Digit customer ID as an <code>Integer</code> to identify the customer
+     *                   to be removed
+     * @return <code>true</code> if customer is found and successfully removed. Otherwise, it will
+     * return <code>false</code>.
+     *
+     * @see Customer
      */
     public boolean removeCustomer(int customerId) {
         if (CUSTOMERS.remove(customerId) != null) {
@@ -151,20 +221,24 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
     }
 
     /**
-     * Retrieves the Customer with the given Customer ID.
+     * Retrieves the <code>Customer</code> with the given customer ID.
      *
-     * @param customerId the given Customer ID
-     * @return the Customer with the given ID, or null if not found
+     * @param customerId the 5-digit customer ID of the customer to be retrieved as an <code>Integer</code>
+     * @return the <code>Customer</code> object with the <code>customerId</code>, or <code>null</code> if
+     * not found
      */
     public Customer getCustomer(int customerId) {
         return CUSTOMERS.get(customerId);
     }
 
     /**
-     * Compares two Branch codes and reports whether they are equal.
+     * Compares two <code>Branch</code> objects.<br><br>
+     * Uses the <code>BRANCH_CODE</code> field to compare if the other branch <code>o</code>
+     * has the same 3-Digit ID.
      *
-     * @param o the other Branch
-     * @return true if they are equal
+     * @param o the other <code>Branch</code> object
+     * @return <code>true</code> if they have matching <code>BRANCH_CODE</code>s, or if the other
+     * branch is itself. Otherwise, it will return <code>false</code>.
      */
     @Override
     public boolean equals(Object o) {
@@ -175,9 +249,9 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
     }
 
     /**
-     * Generates a hash code for the Branch.
+     * Generates a hash code for the <code>Branch</code> object.<br><br>
      *
-     * @return an integer value for the hash code
+     * @return an <code>Integer</code> value for the hash code
      */
     @Override
     public int hashCode() {
@@ -185,14 +259,15 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
     }
 
     /**
-     * Provides a String representation of the Branch in the form:
-     * <br>Branch Name (Branch Code)<br>Address<br>- Customers -
+     * Provides a <code>String</code> representation of the branch in the form:
+     * <br>
+     * <blockquote>Branch Name (Branch Code)<br>Address<br><blockquote>- Customers -</blockquote></blockquote>
      *
-     * @return the String representation
+     * @return the representation of the branch as a <code>String</code>
      */
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder(BRANCH_NAME + " [" + BRANCH_CODE + "]");
+        StringBuilder s = new StringBuilder(branchName + " [" + BRANCH_CODE + "]");
         s.append("\n\t").append(branchAddress.toString());
         s.append("\n\t").append("Customers:");
         if (numberOfCustomers == 0) {
@@ -206,19 +281,20 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
     }
 
     /**
-     * Provides a simple String representation of the Branch in the form:
-     * <br>[Branch Code] Branch Name
+     * Provides a simple <code>String</code> representation of the branch in the form:
+     * <br>
+     * <blockquote>[Branch Code] Branch Name</blockquote>
      *
-     * @return the simplified String representation
+     * @return the simplified branch representation as a <code>String</code>
      */
     public String simplifiedString() {
-        return "[" + BRANCH_CODE + "] " + BRANCH_NAME;
+        return "[" + BRANCH_CODE + "] " + branchName;
     }
 
     /**
-     * Retrieves non-negative integer key, a 3-Digit Branch Code.
+     * Retrieves non-negative <code>Integer</code> key, a 5-Digit branch code.
      *
-     * @return the key
+     * @return the key as an <code>Integer</code>
      */
     @Override
     public int getKey() {
@@ -226,9 +302,10 @@ public class Branch implements Serialized, Iterable<Customer>, Serializable {
     }
 
     /**
-     * Returns an iterator over elements of type Customers.
+     * Returns an <code>Iterator</code> of type <code>Customer</code> to iterate
+     * through the map of <code>Customer</code>s registered at the branch.
      *
-     * @return an Iterator.
+     * @return an <code>Iterator</code> of type <code>Customer</code>
      */
     @Override
     public Iterator<Customer> iterator() {

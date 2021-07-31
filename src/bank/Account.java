@@ -6,29 +6,42 @@ import java.util.Objects;
 import java.util.Random;
 
 /**
- * Defines the methods required to establish a Bank Account distinguished with a
- * 9-digit Account number.
+ * This class represents a customer's account.<br><br>
+ * <code>Account</code> objects provide a variety of methods to simulate a real-life bank account. From
+ * depositing and withdrawing money, to transferring funds from one account to another. <br><br>
+ * <code>Account</code> objects are provided with a 9-Digit unique ID called <code>ACCOUNT_NUMBER</code> at
+ * instantiation. This value is final and cannot be mutated. <br><br>
  *
- * @author Samuel Kosasih
+ * @author Samuel A. Kosasih
+ *
+ * @see Customer
  */
 public class Account implements Serialized, Serializable {
 
     /**
-     * A 9-Digit unique integer representing the Account number
+     * This field stores a 9-Digit unique ID representing the Account Number as an <code>Integer</code>.
      */
     private final int ACCOUNT_NUMBER;
+
     /**
-     * Amount of money being held in the Account
+     * This field stores the account balance as a <code>Double</code>.<br><br>
+     * Represents the amount of funds currently in this account.
      */
     private double balance;
 
     /**
-     * Formats Strings to local currency.
+     * This field is a <code>NumberFormat</code> object variable used to format <code>Number</code>
+     * variables to display as local currency.<br><br>
+     * The currency format is chosen from the system's local currency configurations.
      */
     private final NumberFormat currency = NumberFormat.getCurrencyInstance();
 
     /**
-     * Default Constructor.
+     * Default Constructor. <br><br>
+     * Generates a 9-Digit unique ID used to distinguish between other <code>Account</code>
+     * objects. This ID is generated using the <code>Random</code> class.
+     *
+     * @see Random
      */
     public Account() {
         Random rand = new Random();
@@ -37,28 +50,31 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Retrieves the 9-Digit Account number.
+     * Retrieves the 9-Digit <code>ACCOUNT_NUMBER</code>.
      *
-     * @return an integer value for the Account number
+     * @return a value for the account number as an <code>Integer</code>
      */
     public int getAccountNumber() {
         return ACCOUNT_NUMBER;
     }
 
     /**
-     * Retrieves the balance of the Account.
+     * Retrieves the amount of funds stored in the account.
      *
-     * @return a double value representing the balance
+     * @return a value for the account balance as a <code>Double</code>
      */
     public double getBalance() {
         return balance;
     }
 
     /**
-     * Deposits the given amount of money to the Account.
+     * Deposits the given amount of funds to the account.<br><br>
+     * This method will not accept any value below, or equal to, zero (0) as a
+     * parameter.
      *
-     * @param amount the given amount of money
-     * @return true if deposit is successful
+     * @param amount the given amount of funds as a <code>Double</code>
+     * @return <code>true</code> if value is above zero (0) and deposit is successful.
+     * Otherwise, it will return <code>false</code>.
      */
     public boolean deposit(double amount) {
         if (amount <= 0) {
@@ -69,10 +85,13 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Withdraws the given amount of money from the Account.
+     * Withdraws the desired amount of funds from the account.<br><br>
+     * This method will not accept any value below, or equal to, zero (0), or any
+     * value that is greater than the account balance.
      *
-     * @param amount the given amount of money
-     * @return true if withdrawal is successful
+     * @param amount the desired amount of funds as a <code>Double</code>
+     * @return <code>true</code> if value meets criteria and withdrawal is successful.
+     * Otherwise, it will return <code>false</code>.
      */
     public boolean withdraw(double amount) {
         if (amount > balance || amount <= 0) {
@@ -83,11 +102,22 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Transfers the given amount of money to another given Account.
+     * Transfers the desired amount of funds to the other <code>account</code>.<br><br>
+     * This method will not accept itself as a parameter, as it's illogical to transfer funds to
+     * the same account.<br><br>
+     * The process will also call the <code>withdraw()</code> method, which means that the value
+     * for the <code>amount</code> must also follow the criteria:
+     * <ul>
+     *     <li>value must be greater than zero (0)</li>
+     *     <li>value must be less than the account balance</li>
+     * </ul>
      *
-     * @param account the given Account
-     * @param amount  the given amount of money
-     * @return true if money transfer is successful
+     * @param account the recipient <code>Account</code>. This account will be the destination
+     *                of your funds.
+     * @param amount  the given amount of funds as a <code>Double</code>
+     * @return <code>true</code> if <code>account</code> differs from the origin account, and
+     * the value for <code>amount</code> follows the criteria. Otherwise, it will return
+     * <code>false</code>
      */
     public boolean transfer(Account account, double amount) {
         if (!this.equals(account)) {
@@ -100,10 +130,13 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Compares two Accounts' Account numbers and reports whether they are equal.
+     * Compares two <code>Account</code> objects.<br><br>
+     * Uses the <code>ACCOUNT_NUMBER</code> field to compare if the other account <code>o</code>
+     * has the same 9-Digit ID.
      *
-     * @param o the other Account
-     * @return true if they are equal
+     * @param o the other <code>Account</code> object
+     * @return <code>true</code> if they have matching <code>ACCOUNT_NUMBER</code>s, or if the other
+     * account is itself. Otherwise, it will return <code>false</code>.
      */
     @Override
     public boolean equals(Object o) {
@@ -114,9 +147,9 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Generates a hash code for the Account.
+     * Generates a hash code for the <code>Account</code> object.<br><br>
      *
-     * @return an integer value for the hash code
+     * @return an <code>Integer</code> value for the hash code
      */
     @Override
     public int hashCode() {
@@ -124,10 +157,11 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Provides a String representation of the Account in the form:
-     * <br>Account Number: #########<br>Balance: $###.##
+     * Provides a <code>String</code> representation of the account in the form:
+     * <br>
+     * <blockquote>Account Number: #########<br>Balance: $###.##</blockquote>
      *
-     * @return the String representation
+     * @return the representation of the account as a <code>String</code>
      */
     @Override
     public String toString() {
@@ -136,9 +170,9 @@ public class Account implements Serialized, Serializable {
     }
 
     /**
-     * Retrieves non-negative integer key, a 9-Digit Account Number.
+     * Retrieves non-negative <code>Integer</code> key, a 9-Digit account number.
      *
-     * @return the key
+     * @return the key as an <code>Integer</code>
      */
     @Override
     public int getKey() {
