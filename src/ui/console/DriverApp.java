@@ -4,35 +4,43 @@ import bank.Account;
 import bank.Bank;
 import bank.Branch;
 import bank.Customer;
-import business.BankManager;
+import data.BankManager;
 import org.jetbrains.annotations.NotNull;
+import utility.Address;
 
 import java.text.NumberFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * This class provides a console-based UI for users to perform operations.
+ * This class provides a console-based UI for users to perform operations.<br><br>
+ * Ensure that the application quits properly without forcing it to exit. This allows the changes made
+ * during the session to be saved properly.<br><br>
+ * <b>Run the <code>main()</code> method and communicate with the program through the IDE console.</b>
  *
- * @author Samuel Kosasih
+ * @author Samuel A. Kosasih
  */
 public class DriverApp {
 
     /**
-     * Business Layer. Manages the Banks in which the user has created.
+     * This field stores a <code>BankManager</code> object.<br><br>
+     * Serves to handle <code>Bank</code>-related operations, as well as a database.
      */
     private static final BankManager manager = new BankManager();
+
     /**
-     * Scanner class. Used to retrieve input from user.
+     * This field stores a <code>Scanner</code> object to retrieve user input from the console.
      */
     private static final Scanner scan = new Scanner(System.in);
+
     /**
-     * Formats Strings to local currency.
+     * This field stores a <code>NumberFormat</code> object to format numbers to the system's local
+     * currency.
      */
     private static final NumberFormat currency = NumberFormat.getCurrencyInstance();
 
     /**
-     * Driver method. Runs the methods on the console.
+     * Driver method. Runs the application on the console.
      *
      * @param args command-line Strings
      */
@@ -94,7 +102,7 @@ public class DriverApp {
     }
 
     /**
-     * Provides an overview of the program to the console.
+     * Provides an overview of the program instructions to the console.
      */
     private static void printInstructions() {
         System.out.println(
@@ -108,9 +116,14 @@ public class DriverApp {
     }
 
     /**
-     * Allows the user to select Banks, create one, or remove it from the database.
+     * Allows the user to make <code>Bank</code>-related requests.<br><br>
+     * The user has a choice of creating a new bank, or to quit the application. If there is a
+     * <code>Bank</code> object already present in the database, it will be displayed to the user.<br><br>
+     * If the method reads an input that matches any of the bank IDs, then it will return the <code>Bank</code>
+     * object associated with the ID.<br><br>
+     * Entering <code>-1</code> will return <code>null</code>.
      *
-     * @return the selected Bank object
+     * @return the selected <code>Bank</code> object, or <code>null</code> if the user decides to quit
      */
     private static Bank selectBank() {
         while (true) {
@@ -167,11 +180,23 @@ public class DriverApp {
     }
 
     /**
-     * Allows the user to perform operations within a Bank, whether that be selecting
-     * a Branch of the Bank, creating a Branch, or removing a Branch.
+     * Allows the user to make <code>Branch</code>-related requests.
+     * <br><br>
+     * This method simulates the management of the bank they selected. Options include removing the bank
+     * from the database (which will also delete all the data within the <code>Bank</code> object), or to return
+     * to the previous menu to reselect another bank.
+     * <br><br>
+     * The user also has a choice of creating a new branch. If there is a <code>Branch</code> object already
+     * present in the database, it will be displayed to the user.
+     * <br><br>
+     * If the method reads an input that matches any of the branch codes, then it will return the
+     * <code>Branch</code> object associated with the code.
+     * <br><br>
+     * Entering <code>-1</code> will return <code>null</code>.
      *
-     * @param bank the selected Bank
-     * @return the selected Branch
+     * @param bank the <code>Bank</code> object the user has selected
+     * @return the selected <code>Branch</code> object, or <code>null</code> if the user decides to return to the
+     * previous menu
      */
     private static Branch bankMenu(Bank bank) {
         while (true) {
@@ -210,7 +235,7 @@ public class DriverApp {
                             System.out.println("Branch not created.");
                             break;
                         }
-                        if (bank.createBranch(branchName, branchAddress)) {
+                        if (bank.createBranch(branchName, new Address(branchAddress))) {
                             System.out.println("\nBranch is successfully created.");
                             break;
                         } else {
@@ -248,12 +273,24 @@ public class DriverApp {
     }
 
     /**
-     * Allows the user to access Customer objects stored within the selected
-     * Branch, or create/delete them from the database.
+     * Allows the user to make <code>Customer</code>-related requests.
+     * <br><br>
+     * This method simulates the management of the branch they selected. Options include removing the branch
+     * from the database (which will also delete all the data within the <code>Branch</code> object), or to return
+     * to the previous menu to reselect another branch.
+     * <br><br>
+     * The user also has a choice of adding a new customer. If there is a <code>Customer</code> object already
+     * present in the database, it will be displayed to the user.
+     * <br><br>
+     * If the method reads an input that matches any of the customer IDs, then it will return the
+     * <code>Customer</code> object associated with the ID.
+     * <br><br>
+     * Entering <code>-1</code> will return <code>null</code>.
      *
-     * @param branch the selected Branch
-     * @param bank   the selected Bank
-     * @return the selected Customer
+     * @param branch the <code>Branch</code> object the user has selected
+     * @param bank   the <code>Bank</code> object the user has selected
+     * @return the selected <code>Customer</code> object, or <code>null</code> if the user decides to return to the
+     * previous menu
      */
     private static Customer branchMenu(Branch branch, Bank bank) {
         while (true) {
@@ -332,11 +369,24 @@ public class DriverApp {
     }
 
     /**
-     * Allows the user to access Customer Accounts.
+     * Allows the user to make <code>Account</code>-related requests.
+     * <br><br>
+     * This method simulates the management of the customer they selected. Options include removing the customer
+     * from the database (which will also delete all the data within the <code>Customer</code> object), or to return
+     * to the previous menu to reselect another customer.
+     * <br><br>
+     * The user also has a choice of opening a new account. If there is an <code>Account</code> object already
+     * present in the database, it will be displayed to the user.
+     * <br><br>
+     * If the method reads an input that matches any of the account numbers, then it will return the
+     * <code>Account</code> object associated with the number.
+     * <br><br>
+     * Entering <code>-1</code> will return <code>null</code>.
      *
-     * @param customer the selected Customer
-     * @param branch   the selected Branch
-     * @return the selected Account
+     * @param customer the <code>Customer</code> object the user has selected
+     * @param branch   the <code>Branch</code> object the user has selected
+     * @return the selected <code>Account</code> object, or <code>null</code> if the user decides to return to the
+     * previous menu
      */
     private static Account customerMenu(Customer customer, Branch branch) {
         while (true) {
@@ -394,13 +444,21 @@ public class DriverApp {
     }
 
     /**
-     * Allows the user to manage a specific Account, from depositing and withdrawing money,
-     * transferring money to another Customer within the Branch, to closing the Account itself.
+     * Allows the user to manage an <code>Account</code> object.
+     * <br><br>
+     * This method simulates the management of the account they selected. Options include depositing funds into
+     * the account, withdrawing funds from the account, transfer funds to another customer account within
+     * the branch, closing the account (as long as funds are empty), or to return to the previous menu to
+     * reselect another account.
+     * <br><br>
+     * This method can only return an <code>Integer</code> value of <code>-1</code> at the user's request.
+     * This request would indicate that the user wishes to return to the previous menu.
      *
-     * @param account  the selected Account
-     * @param customer the selected Customer
-     * @param branch   the selected Branch
-     * @return returns -1, to indicate that the user is done managing the Account
+     * @param account  the <code>Account</code> object the user has selected
+     * @param customer the <code>Customer</code> object the user has selected
+     * @param branch   the <code>Branch</code> object the user has selected
+     * @return an <code>Integer</code> value of <code>-1</code> to indicate the user is finished managing
+     * the account
      */
     private static int manageAccount(Account account, Customer customer, Branch branch) {
         while (true) {
@@ -584,10 +642,10 @@ public class DriverApp {
     }
 
     /**
-     * A helper method to indicate that a String is valid with alphabetical letters only.
+     * Verifies whether a <code>String</code> does not have any numerical characters at all.
      *
-     * @param s the String to be checked
-     * @return true if String is valid
+     * @param s the <code>String</code> to be verified
+     * @return <code>true</code> if criteria is met, otherwise <code>false</code>
      */
     private static boolean isValidString(@NotNull String s) {
         char[] chars = s.toCharArray();
